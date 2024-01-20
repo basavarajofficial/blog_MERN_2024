@@ -4,3 +4,10 @@ export const errorHandler = (statusCode, message) => {
     error.message = message;
     return error;
 }
+
+export const successHandler = (statusCode, message) => {
+    const msg = new Object();
+    msg.statusCode = statusCode;
+    msg.message = message;
+    return msg;
+}

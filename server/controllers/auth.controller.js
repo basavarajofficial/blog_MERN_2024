@@ -1,12 +1,13 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import { errorHandler } from "../utils/error.js";
+import { errorHandler, successHandler } from "../utils/error.js";
 
 
 export const signup = async (req, res, next) => {
     const {username, email, password} = req.body;
 
-    if(!username || !email || !password || username.length === "" || email.length === "" || password.length === ""){
+    if(!username || !email || !password || username.length === "" 
+            || email.length === "" || password.length === ""){
         next(errorHandler(400, "All fields are required!"));
     }
 
@@ -21,9 +22,8 @@ export const signup = async (req, res, next) => {
         next(errorHandler(400, "email already exists in our database!"));
     }
     
-
     
-    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const hashedPassword =  await bcryptjs.hash(password, 10);
 
     const newUser = new User({
         username,
@@ -32,8 +32,9 @@ export const signup = async (req, res, next) => {
     });
     try {
         await newUser.save();
-        res.status(200).json({message: "signup successfully!"});
+        // res.status(200).json({message: "signup successfully!"});
+        next(successHandler(200, "signup successfully!"));
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
