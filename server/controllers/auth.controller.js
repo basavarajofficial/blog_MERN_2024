@@ -38,3 +38,31 @@ export const signup = async (req, res, next) => {
         next(error);
     }
 }
+
+
+
+//* sign-in
+
+export const signin = async(req, res, next) => {
+    const {email, password} = req.body;
+    
+    
+    try {
+        if( !email || !password || email.length === "" || password.length === ""){
+            next(errorHandler(400, "All fields are required!"));
+        }
+    const user = await User.findOne({email});
+    if(!user){
+        next(errorHandler(400, "email not registered!"));
+    }
+    const matchPassword = await bcryptjs.compare(password, user.password);
+
+    if(!matchPassword){
+        next(errorHandler(400, "password is incorrect!"));
+    }
+    
+    next(successHandler(200, "signin successful!"));
+    } catch (error) {
+        next(error);
+    }
+}
