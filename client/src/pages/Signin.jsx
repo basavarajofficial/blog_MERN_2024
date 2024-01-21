@@ -1,13 +1,22 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react"
 import {  useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import {  useDispatch, useSelector } from "react-redux";
+import { signInStart,
+  signInSuccess,
+  signInFailure, } from "../redux/user/userSlice";
+
 
 
 function Signin() {
 
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [alertMessage, setAlertMessage] = useState(null);
+
+  
+  const dispatch = useDispatch();
+  const { loading, error : alertMessage} = useSelector(state => state.user);
 
   const navigate = useNavigate();
 
@@ -17,33 +26,40 @@ function Signin() {
   
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
+    if(!formData.email || !formData.password){
+      return dispatch(signInFailure("Please fill all the fields"));
+    }
     try {
+      dispatch(signInStart());
       const res = await fetch('/api/auth/signin',{
         method: "POST",
         headers : {'Content-Type': 'application/json'},
         body : JSON.stringify(formData)
       });
 
-      if(res.ok){
-        navigate('/');
-      }
-
       const data = await res.json();
       console.log(data);
-      setAlertMessage(data);
-      setLoading(false);
+      if(data?.success === false){
+        dispatch(signInFailure(data?.message))
+      }
+      // setLoading(false);
+
+      if(res.ok){
+          dispatch(signInSuccess(data));
+          navigate('/');
+        }
 
     } catch (error) {
-      setAlertMessage(error.message);
-      setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   }
 
-  setTimeout(() => {
-    if(alertMessage !== null)
-    setAlertMessage(null);
-  },4000)
+  // setTimeout(() => {
+  //   if(alertMessage !== null)
+  //   setAlertMessage(null);
+  // },4000)
+
   return (
     <div className="min-h-screen mt-20">
     <div className="flex flex-wrap p-3 max-w-2xl mx-auto justify-center gap-12 flex-col sm:flex-row md:max-w-4xl">
@@ -77,7 +93,7 @@ function Signin() {
         <TextInput id="password" type="password" onChange={handleChange}/>
       </div>
       
-      <Button gradientDuoTone="purpleToPink"  outline type="submit"  >
+      <Button gradientDuoTone="purpleToPink"  outline type="submit" disabled={loading}  >
         {loading ? (<>
           <Spinner size='sm' />
           <span>Loading...</span>
@@ -93,8 +109,8 @@ function Signin() {
     </div>
 
     {(alertMessage) && (
-      <Alert className="mt-5" color={(alertMessage.statusCode !==200) ? 'failure' : 'success' }>
-        {alertMessage?.message}
+      <Alert className="mt-5" color='failure'>
+        {alertMessage}
       </Alert>
     )}
 
