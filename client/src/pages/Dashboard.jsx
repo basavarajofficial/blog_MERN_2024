@@ -1,7 +1,35 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"
+import SideBar from "../components/Dashboard/SideBar";
+import Profile from "../components/Dashboard/Profile";
+import AdminProfile from "../components/Dashboard/AdminProfile";
 
 function Dashboard() {
+  const location = useLocation();
+  const [tab, setTab] = useState("");
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const tabFromUrl = urlParams.get("tab");
+    if(tabFromUrl){
+      setTab(tabFromUrl);
+    }
+    console.log(tabFromUrl);
+  }, [location.search])
+
   return (
-    <div>Dashboard</div>
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/** sidebar */}
+      <div className="md:w-56">
+        <SideBar />
+      </div>
+
+      {/* profile */}
+      <div>
+        {tab === "profile" && <Profile />}
+        {tab === "admin" && <AdminProfile />}
+      </div>
+    </div>
   )
 }
 
