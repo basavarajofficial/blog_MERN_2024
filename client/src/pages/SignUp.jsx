@@ -1,12 +1,14 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react"
 import { Suspense, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
 
   const [formData, setFormData] = useState({});
   const [alertMessage, setAlertMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+
   
   const navigate = useNavigate();
 
@@ -17,6 +19,7 @@ const SignUp = () => {
   const submitHandler = async(e) => {
     e.preventDefault();
     try {
+      
       setLoading(true);
       setAlertMessage(null)
       const res = await fetch("/api/auth/signup", {
@@ -83,6 +86,7 @@ const SignUp = () => {
           <span>Loading...</span>
         </>) : "Sign up"}
       </Button>
+      <OAuth />
     </form>
     </Suspense>
     <div className="mt-6 flex gap-2">

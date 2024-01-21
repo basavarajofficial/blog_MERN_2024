@@ -5,6 +5,7 @@ import {  useDispatch, useSelector } from "react-redux";
 import { signInStart,
   signInSuccess,
   signInFailure, } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 
 
@@ -99,6 +100,7 @@ function Signin() {
           <span>Loading...</span>
         </>) : "Sign in"}
       </Button>
+      <OAuth />
     </form>
   
     <div className="mt-6 flex gap-2">
