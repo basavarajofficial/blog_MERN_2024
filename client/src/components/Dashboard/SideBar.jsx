@@ -1,6 +1,6 @@
 import {  Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiArrowSmRight, HiChartPie, HiUser } from 'react-icons/hi';
+import { HiArrowSmRight, HiHome, HiUser } from 'react-icons/hi';
 import { Link, useLocation } from "react-router-dom";
 
 function SideBar() {
@@ -14,19 +14,21 @@ function SideBar() {
     if(tabFromUrl){
       setTab(tabFromUrl);
     }
-    console.log(tabFromUrl);
   }, [location.search])
 
   return (
-    <Sidebar className="w-full md:w-56">
+    <Sidebar className="w-full md:w-56 " >
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#"  icon={HiChartPie} >
-            Dashboard
+
+          <Link to={"/"} className="mb-4">
+          <Sidebar.Item href="#" icon={HiHome} as='div' >
+            Home
           </Sidebar.Item>
+          </Link>
 
           <Link to={"/dashboard?tab=profile"}>
-          <Sidebar.Item href="#" active={tab === 'profile'} icon={HiUser} label="user" labelColor="dark" >
+          <Sidebar.Item href="#" active={tab === 'profile'} icon={HiUser} label="user" labelColor="dark" as='div' >
             Profile
           </Sidebar.Item>
           </Link>

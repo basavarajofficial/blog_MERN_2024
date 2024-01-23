@@ -14,7 +14,6 @@ function Dashboard() {
     if(tabFromUrl){
       setTab(tabFromUrl);
     }
-    console.log(tabFromUrl);
   }, [location.search])
 
   return (
@@ -25,7 +24,7 @@ function Dashboard() {
       </div>
 
       {/* profile */}
-      <div>
+      <div className="w-full h-screen">
         {tab === "profile" && <Profile />}
         {tab === "admin" && <AdminProfile />}
       </div>
