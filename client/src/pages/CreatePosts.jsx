@@ -4,15 +4,18 @@ import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { app } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 function CreatePosts() {
     const [file, setFile] = useState(null);
     const [imageProgress, setImageProgress] = useState(null);
     const [imageUploadError, setImageUploadError] = useState(null);
+    const [publishError, setPublishError] = useState(null);
 
-    console.log(imageUploadError);
 
     const [ formData, setFormData] = useState({});
+
+    const navigate = useNavigate();
 
     const uploadImageHandler = async() => {
         try {
@@ -37,9 +40,6 @@ function CreatePosts() {
                     setImageProgress(null);
                 },
                 () => getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) =>{
-                    if(downloadURL){
-                        console.log(downloadURL);
-                    }
                     setImageProgress(null);
                     setImageUploadError(null);
                     setFormData({...formData, image: downloadURL});
@@ -48,16 +48,38 @@ function CreatePosts() {
         } catch (error) {
             setImageUploadError("Image upload failed ", error);
             setImageProgress(null);
-            console.log(error);
+        }
+    }
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        console.log(formData);
+        try {
+            const res = await fetch('/api/post/create', {
+                method : "POST",
+                headers : { "Content-Type": "application/json"},
+                body : JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data);
+            if(!res.ok){
+                setPublishError(data.message);
+            }
+            if(res.ok){
+                setPublishError(null);
+                navigate(`/post/${data?.slug}`);
+            }
+        } catch (error) {
+            setPublishError("Something went wrong");
         }
     }
   return (
     <div className="min-h-screen p-3 mx-auto max-w-3xl ">
         <h1 className="text-center text-2xl sm:text-3xl font-bold my-7">Create a Post</h1>
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={submitHandler}>
             <div className='flex flex-col gap-4 sm:flex-row justify-between'>
-            <TextInput placeholder='Title' required className='caret-pink-600 flex-1'  />
-            <Select>
+            <TextInput placeholder='Title' required className='caret-pink-600 flex-1' onChange={(e) => setFormData({...formData, title : e.target.value})}  />
+            <Select onChange={(e) => setFormData({...formData, catagory : e.target.value})}>
                 <option value="uncategorized" >Select a Catagory</option>
                 <option value="javascript" >Javascript</option>
                 <option value="html" >HTML</option>
@@ -86,11 +108,15 @@ function CreatePosts() {
             )}
 
             <ReactQuill theme="snow" placeholder='write something..' 
-                className='h-80 mb-4' required
+                className='h-80 mb-4' required onChange={(value) => {setFormData({...formData, content: value})}}
             />;
 
             <Button type='submit' color='none' className='bg-[navy] text-white dark:text-slate-200 hover:bg-slate-200 hover:text-slate-800 dark:hover:text-slate-800' >Publish</Button>
         </form>
+
+        {publishError && (
+            <Alert color='failure'>{publishError}</Alert>
+        )}
     
     </div>
   )
