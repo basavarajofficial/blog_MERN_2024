@@ -7,7 +7,6 @@ export const updateUser = async (req, res, next) => {
     // req.user -> id from cookie
     // we need check with id of user -> req.params
     const { userId } = req.params;
-
     
     if(req.user.id !== userId) {
         return next(errorHandler(403, "you are not allowed to modify this user!"));
@@ -68,6 +67,14 @@ export const updateUser = async (req, res, next) => {
         try {
             await User.findByIdAndDelete(req.params.userId);
             res.status(200).json("User has been deleted!")
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    export const signout = (req, res, next) => {
+        try {
+            return res.clearCookie('access_token').status(200).json("User has been signed out");
         } catch (error) {
             next(error);
         }

@@ -56,6 +56,7 @@ export const signin = async(req, res, next) => {
     if(!user){
         return next(errorHandler(400, "email not registered!"));
     }
+    
     const matchPassword = await bcryptjs.compare(password, user.password);
 
     if(!matchPassword){
@@ -116,5 +117,6 @@ export const google = async(req, res, next) => {
         next(error)
     }
 }
+
 
 

@@ -2,6 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react"
 import { Suspense, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import OAuth from "../components/OAuth";
+import { PageLogo } from "../components/Logo";
 
 const SignUp = () => {
 
@@ -45,14 +46,11 @@ const SignUp = () => {
     <div className="min-h-screen mt-20">
     <div className="flex flex-wrap p-3 max-w-2xl mx-auto justify-center gap-12 flex-col sm:flex-row md:max-w-4xl">
 
-      <div className="flex-1">
-      <Link to={"/"} className="text-4xl font-bold dark:text-white">
-        <span className="px-2 py-1 bg-gradient-to-r from-[rgba(0,152,43,1)] via-[rgb(32,12,43)] to-[rgba(0,212,255,1)] rounded-xl text-white">
-          TECH
-        </span>
-        Blogs
+    <div className="flex-1">
+      <Link to={"/"} className="text-4xl font-bold dark:text-white w-20 h-20">
+        <PageLogo />
       </Link>
-      <div className="mt-4">
+      <div className=" mt-4 sm:text-xl">
         <p>Wel come to the tech-blogs</p>
         <p>You can signup eith your email and password or with google</p>
       </div>

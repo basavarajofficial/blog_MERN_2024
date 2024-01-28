@@ -1,6 +1,6 @@
-import { Alert, Button, Card, TextInput } from "flowbite-react";
+import { Alert, Button, Card, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
-import { HiPencil } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiPencil } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -15,11 +15,14 @@ import {
   updateFailure,
   updateStart,
   updateSuccess,
+  deleteUserFailure,
+  deleteUserSuccess,
+  deleteUserStart
 } from "../../redux/user/userSlice";
 
 function Profile() {
   const { currentUser } = useSelector((state) => state.user);
-  // const { error } = useSelector((state) => state.user);
+
 
   const [photo, setPhoto] = useState(null);
   const [photoURL, setPhotoURL] = useState(null);
@@ -31,8 +34,8 @@ function Profile() {
   const [fileUploadingSuccess, setFileUploadingSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
 
-
-
+  // * to delete user
+  const [openModal, setOpenModal] = useState(false);
 
   const filePickerRef = useRef();
 
@@ -69,15 +72,14 @@ function Profile() {
       () => {
         setImageFileError("Error uploading image");
         setImageUploadProgress(null);
-        setFileUploading(false)
+        setFileUploading(false);
       },
       () =>
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           if (downloadURL) {
             setPhotoURL(downloadURL);
             setFormData({ ...formData, profilePicture: downloadURL });
-            setFileUploading(false)
-      
+            setFileUploading(false);
           }
         })
     );
@@ -89,17 +91,16 @@ function Profile() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-
   const submitHandler = async (e) => {
     e.preventDefault();
-    setUpdateUserError(null)
-    setFileUploadingSuccess(null)
+    setUpdateUserError(null);
+    setFileUploadingSuccess(null);
     if (Object.keys(formData).length === 0) {
       setUpdateUserError("No changes were made");
       return;
     }
-    if(fileUploading){
-      setUpdateUserError("Please wait for image uploading")
+    if (fileUploading) {
+      setUpdateUserError("Please wait for image uploading");
       return;
     }
     try {
@@ -117,13 +118,34 @@ function Profile() {
         setUpdateUserError(data.message);
       } else {
         dispatch(updateSuccess(data));
-        setFileUploadingSuccess("Your profile updated successfully")
+        setFileUploadingSuccess("Your profile updated successfully");
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
-      setFileUploadingSuccess(error.message)
+      setFileUploadingSuccess(error.message);
     }
   };
+
+
+  // * delete user
+  const deleteUserHandle = async() => {
+    setOpenModal(false);
+    try {
+      deleteUserStart();
+      const res = await fetch(`/api/user/delete/${currentUser._id}` , {
+        method : "DELETE"
+      })
+
+      const data = await res.json();
+      if(!res.ok){
+        dispatch(deleteUserFailure(data.message))
+      }else{
+        dispatch(deleteUserSuccess())
+      }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  }
 
   return (
     <div className="w-full md:w-3xl  p-3">
@@ -181,71 +203,96 @@ function Profile() {
 
             {imageFileError && <Alert color="failure">{imageFileError}</Alert>}
 
-
-        <div className="w-full flex flex-col gap-3 mb-6">
-            <div>
-              <TextInput
-                id="username"
-                defaultValue={currentUser.username}
-                onChange={handleChange}
-                required
-              />
+            <div className="w-full flex flex-col gap-3 mb-6">
+              <div>
+                <TextInput
+                  id="username"
+                  defaultValue={currentUser.username}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <TextInput
+                  id="email"
+                  defaultValue={currentUser.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <TextInput
+                  id="password"
+                  type="password"
+                  placeholder="password***"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
-            <div>
-              <TextInput
-                id="email"
-                defaultValue={currentUser.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div>
-              <TextInput
-                id="password"
-                type="password"
-                placeholder="password***"
-                onChange={handleChange}
-                required
-              />
-            </div>
-            </div>
-
-            {/* { error && 
-              <Alert color="failure">
-                {error.message}
-              </Alert>
-            } */}
 
             <div className="flex flex-col sm:flex-row gap-4 ">
-            <div className=" transition duration-0 hover:duration-150 ease-in-out">
-              <Button
-                
-                className="w-56 hover:bg-green-500 outline transition duration-0 hover:duration-700 ease-in-out"
-                onClick={submitHandler}
+              <div className=" transition duration-0 hover:duration-150 ease-in-out">
+                <Button
+                  className="w-56 hover:bg-green-500 outline transition duration-0 hover:duration-700 ease-in-out"
+                  onClick={submitHandler}
+                >
+                  update
+                </Button>
+              </div>
+
+              <div
+                onClick={() => setOpenModal(true)}
+                className=" cursor-pointer rounded-lg border-2 border-red-500 hover:border-red-800 px-4 py-2 text-center text-sm font-medium hover:bg-red-400 hover:text-slate-800 "
               >
-                update
-              </Button>
+                Delete Account
+              </div>
             </div>
 
-            <div className=" cursor-pointer rounded-lg border-2 border-red-500 hover:border-red-800 px-4 py-2 text-center text-sm font-medium hover:bg-red-400 hover:text-slate-800 ">
-              Delete Account
-            </div>
-            </div>
-
-           { fileUploadingSuccess && 
+            {fileUploadingSuccess && (
               <Alert color="success" className="mt-5">
                 {fileUploadingSuccess}
               </Alert>
-            }
-           { updateUserError && 
+            )}
+            {updateUserError && (
               <Alert color="warning" withBorderAccent className="mt-5">
                 {updateUserError}
               </Alert>
-            }
-
+            )}
+            {/* {error && (
+              <Alert color="failure" withBorderAccent className="mt-5">
+                {error}
+              </Alert>
+            )} */}
           </div>
         </form>
       </Card>
+
+      {/*  modal for delete user */}
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete this product?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={deleteUserHandle}>
+                {"Yes, I'm sure"}
+              </Button>
+              <Button color="gray" onClick={() => setOpenModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
