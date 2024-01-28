@@ -1,14 +1,16 @@
 import {  Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiArrowSmRight, HiHome, HiUser } from 'react-icons/hi';
+import { HiArrowSmRight, HiDocument, HiHome, HiUser } from 'react-icons/hi';
 import { Link, useLocation } from "react-router-dom";
 import { signoutStart, signoutSuccess } from "../../redux/user/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function SideBar() {
 
     const location = useLocation();
     const [tab, setTab] = useState("");
+
+    const {currentUser} = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
 
@@ -32,17 +34,15 @@ function SideBar() {
       }else{
         dispatch(signoutSuccess());
       }
-
     } catch (error) {
         console.log(error.message);
     }
-
   }
 
   return (
     <Sidebar className="w-full md:w-56 " >
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
+        <Sidebar.ItemGroup className="flex flex-col">
 
           <Link to={"/"} className="mb-4">
           <Sidebar.Item href="#" icon={HiHome} as='div' >
@@ -51,10 +51,18 @@ function SideBar() {
           </Link>
 
           <Link to={"/dashboard?tab=profile"}>
-          <Sidebar.Item href="#" active={tab === 'profile'} icon={HiUser} label="user" labelColor="dark" as='div' >
+          <Sidebar.Item href="#" active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? "admin" : "usercr"} labelColor="dark" as='div' >
             Profile
           </Sidebar.Item>
           </Link>
+
+        {currentUser.isAdmin && (
+          <Link to={"/dashboard?tab=posts"}>
+          <Sidebar.Item href="#" active={tab === 'posts'} icon={HiDocument}  labelColor="dark" as='div' >
+            Posts
+          </Sidebar.Item>
+          </Link>
+        )}
 
           <Sidebar.Item href="#" icon={HiArrowSmRight} onClick={signoutHandler}>
             Sign out

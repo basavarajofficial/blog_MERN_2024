@@ -150,7 +150,7 @@ function Profile() {
 
   return (
     <div className="w-full md:w-3xl  p-3 relative">
-      <Card className=" sm:min-w-3xl mx-auto max-w-lg h-full mt-10 bg-blue-200">
+      <Card className=" sm:min-w-4xl mx-auto max-w-xl h-full mt-10 bg-gray-200">
         {
           currentUser?.isAdmin && 
           <Link to={'/create-post'} className="group/item">
@@ -161,7 +161,7 @@ function Profile() {
           </Link>
         }
 
-        <form>
+        <form className="sm:min-w-4xl mx-auto max-w-lg">
           <div className="flex flex-col items-center py-6">
             <h1 className="text-xl sm:text-3xl font-semibold pb-4">{currentUser.isAdmin ? "Admin" : "Profile"}</h1>
             <input
@@ -245,7 +245,7 @@ function Profile() {
             <div className="flex flex-col sm:flex-row gap-4 ">
               <div className=" transition duration-0 hover:duration-150 ease-in-out">
                 <Button disabled={loading || fileUploading}
-                  className="w-56 hover:bg-green-500 outline transition duration-0 hover:duration-700 ease-in-out"
+                  className="w-56" gradientDuoTone='purpleToPink' outline
                   onClick={submitHandler}
                 >
                   {loading ?

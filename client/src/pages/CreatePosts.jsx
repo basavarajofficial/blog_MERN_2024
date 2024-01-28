@@ -31,9 +31,8 @@ function CreatePosts() {
             uploadTask.on(
                 "state_changed",
                 (snapshot) => {
-                  const progress =
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                  setImageProgress(progress.toFixed(0));
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setImageProgress(progress.toFixed(0));
                 },
                 (error) => {
                     setImageUploadError("Image upload failed ", error);
@@ -89,7 +88,7 @@ function CreatePosts() {
                 <option value="nextjs" >Next Js</option>
             </Select>
             </div>
-            <div className='flex gap-4 items-center justify-between border-4 border-teal-400 border-dotted p-4'>
+            <div className='flex gap-4 items-center justify-between border-2 rounded-xl p-4 drop-shadow-xl'>
                 <FileInput type='file' accept='image/*' onChange={(e) => setFile(e.target.files[0])} />
                 <span>
                 {
@@ -106,12 +105,13 @@ function CreatePosts() {
             {formData?.image && (
                 <img src={formData?.image} alt="image" className='w-full h-72 object-cover' />
             )}
-
+            
+            
             <ReactQuill theme="snow" placeholder='write something..' 
-                className='h-80 mb-4' required onChange={(value) => {setFormData({...formData, content: value})}}
-            />;
+                className='border-2 border-gray-500 h-80 pb-11 rounded-xl drop-shadow-xl' required onChange={(value) => {setFormData({...formData, content: value})}}
+            />
 
-            <Button type='submit' color='none' className='bg-[navy] text-white dark:text-slate-200 hover:bg-slate-200 hover:text-slate-800 dark:hover:text-slate-800' >Publish</Button>
+            <Button type='submit'  >Publish</Button>
         </form>
 
         {publishError && (
