@@ -1,7 +1,8 @@
-import { Alert, Button, Card, Modal, TextInput } from "flowbite-react";
+import { Alert, Button, Card, Modal, Spinner, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
-import { HiOutlineExclamationCircle, HiPencil } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiPencil, HiPlusCircle } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -21,7 +22,7 @@ import {
 } from "../../redux/user/userSlice";
 
 function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading } = useSelector((state) => state.user);
 
 
   const [photo, setPhoto] = useState(null);
@@ -148,11 +149,21 @@ function Profile() {
   }
 
   return (
-    <div className="w-full md:w-3xl  p-3">
+    <div className="w-full md:w-3xl  p-3 relative">
       <Card className=" sm:min-w-3xl mx-auto max-w-lg h-full mt-10 bg-blue-200">
+        {
+          currentUser?.isAdmin && 
+          <Link to={'/create-post'} className="group/item">
+            <Button className="fixed h-14 w-14 top-20 right-4 rounded-full hover:w-44  ">
+                <span className="hidden group-hover/item:inline-block text-[12px] sm:text-[16px] group-hover/item:text-slate-200">create a post</span>
+                <HiPlusCircle className="text-2xl  " />
+            </Button>
+          </Link>
+        }
+
         <form>
           <div className="flex flex-col items-center py-6">
-            <h1 className="text-xl sm:text-3xl font-semibold pb-4">Profile</h1>
+            <h1 className="text-xl sm:text-3xl font-semibold pb-4">{currentUser.isAdmin ? "Admin" : "Profile"}</h1>
             <input
               type="file"
               accept="image/*"
@@ -233,11 +244,17 @@ function Profile() {
 
             <div className="flex flex-col sm:flex-row gap-4 ">
               <div className=" transition duration-0 hover:duration-150 ease-in-out">
-                <Button
+                <Button disabled={loading || fileUploading}
                   className="w-56 hover:bg-green-500 outline transition duration-0 hover:duration-700 ease-in-out"
                   onClick={submitHandler}
                 >
-                  update
+                  {loading ?
+                  <>
+                   <Spinner aria-label="Spinner button example" size="sm" />
+                   <span className="pl-3">Loading...</span>
+                  </>
+                   : "update" }
+                  
                 </Button>
               </div>
 
