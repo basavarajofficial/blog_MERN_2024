@@ -1,6 +1,6 @@
 import {  Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiArrowSmRight, HiDocument, HiHome, HiUser } from 'react-icons/hi';
+import { HiArrowSmRight, HiDocument, HiHome, HiOutlineDocument, HiOutlinePencilAlt, HiUser } from 'react-icons/hi';
 import { Link, useLocation } from "react-router-dom";
 import { signoutStart, signoutSuccess } from "../../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,15 +51,24 @@ function SideBar() {
           </Link>
 
           <Link to={"/dashboard?tab=profile"}>
-          <Sidebar.Item href="#" active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? "admin" : "usercr"} labelColor="dark" as='div' >
+          <Sidebar.Item href="#" active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? "admin" : "user"} labelColor="dark" as='div' >
             Profile
           </Sidebar.Item>
           </Link>
 
+          {
+          currentUser?.isAdmin && 
+          <Link to={'/create-post'} >
+            <Sidebar.Item href="#" active={tab === 'create-post'} icon={HiOutlinePencilAlt} as='div'>
+              Create Post
+            </Sidebar.Item>
+          </Link>
+        }
+
         {currentUser.isAdmin && (
           <Link to={"/dashboard?tab=posts"}>
-          <Sidebar.Item href="#" active={tab === 'posts'} icon={HiDocument}  labelColor="dark" as='div' >
-            Posts
+          <Sidebar.Item href="#" active={tab === 'posts'} icon={tab !== 'posts' ? HiOutlineDocument : HiDocument}  labelColor="dark" as='div' >
+            My Posts
           </Sidebar.Item>
           </Link>
         )}

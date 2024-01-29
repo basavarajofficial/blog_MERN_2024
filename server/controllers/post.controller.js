@@ -70,3 +70,37 @@ export const getPosts = async (req, res, next) => {
         next(error)
     }
 }
+
+
+export const deletePost = async (req, res, next) => {
+    if(!req.user.isAdmin || req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You do not have permission to delete'));
+    }
+    try {
+        await Post.findByIdAndDelete(req.params.postId);
+        res.status(200).json("Post deleted successfully");
+    } catch (error) {
+        next(error);
+    }
+
+}
+
+export const updatePost = async (req, res, next) => {
+    if(!req.user.isAdmin || req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You do not have permission to update this post.'));
+    }
+    try {
+        const updatedpost = await Post.findByIdAndUpdate(req.params.postId, {
+            $set : {
+                title : req.body.title,
+                category : req.body.category,
+                content : req.body.content,
+                image : req.body.image,
+            },
+        },  { new : true })
+
+        res.status(200).json(updatedpost);
+    } catch (error) {
+        next(error);
+    }
+}

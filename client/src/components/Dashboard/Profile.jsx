@@ -154,9 +154,9 @@ function Profile() {
         {
           currentUser?.isAdmin && 
           <Link to={'/create-post'} className="group/item">
-            <Button className="fixed h-14 w-14 top-20 right-4 rounded-full hover:w-44  ">
+            <Button className="absolute h-9 w-9 sm:h-12 sm:w-12 top-2 right-4 rounded-full hover:w-32 sm:hover:w-40  ">
                 <span className="hidden group-hover/item:inline-block text-[12px] sm:text-[16px] group-hover/item:text-slate-200">create a post</span>
-                <HiPlusCircle className="text-2xl  " />
+                <HiPlusCircle className="text-lg sm:text-xl  " />
             </Button>
           </Link>
         }
@@ -297,7 +297,7 @@ function Profile() {
           <div className="text-center">
             <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this product?
+              Are you sure you want to delete Account?
             </h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={deleteUserHandle}>

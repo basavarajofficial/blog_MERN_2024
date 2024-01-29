@@ -14,10 +14,7 @@ function Header() {
   const { theme, } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
 
-  console.log(loading);
 
-
-  
   const signoutHandler = async () => {
     try {
       dispatch(signoutStart());

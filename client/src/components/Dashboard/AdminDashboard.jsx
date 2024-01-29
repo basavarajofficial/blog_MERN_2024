@@ -58,6 +58,7 @@ function AdminDashboard() {
       const data = res.json();
       if(!res.ok){
         console.log(data.message);
+        return;
       }
       if(res.ok){
         setBlogPosts((prev) => 

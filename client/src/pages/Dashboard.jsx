@@ -24,7 +24,7 @@ function Dashboard() {
       </div>
 
       {/* profile */}
-      <div className="w-full h-screen">
+      <div className="w-full min-h-screen">
         {tab === "profile" && <Profile />}
         {tab === "posts" && <AdminDashboard />}
       </div>
