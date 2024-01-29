@@ -8,6 +8,7 @@ function AdminDashboard() {
 
   const { currentUser } = useSelector(state => state.user);
   const [blogPosts, setBlogPosts] = useState([]);
+  const [ showMore, setShowMore] = useState(true);
 
   console.log(blogPosts);
 
@@ -18,6 +19,9 @@ function AdminDashboard() {
         const data = await res.json();
         if(res.ok){
           setBlogPosts(data.posts);
+          if(data.posts.length < 9){
+            setShowMore(false);
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -26,6 +30,22 @@ function AdminDashboard() {
 
     if(currentUser.isAdmin) fetchPosts();
   }, [currentUser._id]);
+
+  const showMoreHandler = async () => {
+    const startIndex = blogPosts.length;
+    try {
+      const res = await fetch(`/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`);
+      const data = await res.json();
+      if(res.ok){
+        setBlogPosts((prev) => [...prev, ...data.posts]);
+        if(data.posts.length < 9){
+          setShowMore(false)
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   return (
@@ -69,6 +89,14 @@ function AdminDashboard() {
               </Table.Body>
             ))}
           </Table>
+          {
+            showMore && (
+              <button onClick={showMoreHandler} 
+                  className="w-full text-teal-400 font-semibold py-7 hover:text-teal-500">
+                show more
+              </button>
+            )
+          }
         </> 
 
       ) : (
