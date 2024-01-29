@@ -12,32 +12,68 @@ function UsersAll() {
 
     const [openModal, setOpenModal] = useState(false);
     const [userIdToDelete, setUserIdToDelete] = useState("");
+    const [ showMore, setShowMore] = useState(true);
 
 
     useEffect(() => {
         const fetchUsers = async() => {
-            const res = await fetch('/api/user/getusers');
+            try {
+                const res = await fetch('/api/user/getusers');
             const data = await res.json();
-            if(!res.ok){
-                console.log(data.message);
-            }
-            if(res.ok){
+            if (res.ok) {
                 setUsers(data.usersWithoutPassword);
+                if (data.usersWithoutPassword.length < 9) {
+                  setShowMore(false);
+                }
+              }
+            } catch (error) {
+                console.log(error.message);
             }
         }
+        if(currentUser.isAdmin)  fetchUsers();
+    },[currentUser._id, currentUser.isAdmin]);
 
-        fetchUsers();
-    },[]);
+    const showMoreHandler = async () => {
+        const startIndex = users.length;
+        try {
+          const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
+          const data = await res.json();
+          if (res.ok) {
+            setUsers((prev) => [...prev, ...data.usersWithoutPassword]);
+            if (data.usersWithoutPassword.length < 9) {
+              setShowMore(false);
+            }
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
 
 
-    const deleteUserHandle = () => {
-        alert('Delete user');
+    const deleteUserHandle = async () => {
+        
+        try {
+            const res = await fetch(`/api/user/deleteuser/${userIdToDelete}`, {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+
+            if(res.ok){
+                setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
+                setOpenModal(false)
+                setUserIdToDelete("");
+            }else{
+                console.log(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
   return (
     <div className="table-auto overflow-auto md:mx-auto p-3 scroll-smooth will-change-scroll">
-      {currentUser.isAdmin && users.length > 0 ? (
+      {currentUser.isAdmin && users?.length > 0 ? (
         <>
           <Table hoverable className="shadow-md rounded-md">
             <Table.Head>
@@ -65,26 +101,32 @@ function UsersAll() {
                   <Table.Cell className="text-xl">{user.isAdmin ? <HiBadgeCheck  color="green" /> : <HiXCircle color="red" />}</Table.Cell>
                   
                   <Table.Cell>
-                      <span onClick={() => {
+                    <span onClick={() => {
                             setOpenModal(true)
                             setUserIdToDelete(user._id)
                             }} className="hover:text-red-600  text-2xl font-bold cursor-pointer ">
                                 <abbr title="Delete">
                             <TiUserDeleteOutline className="hover:font-extrabold" />
                                 </abbr>
-                        </span>
+                    </span>
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
             ))}
           </Table>
-        </> 
 
+          {
+            showMore && (
+              <button onClick={showMoreHandler} 
+                  className="w-full text-teal-400 font-semibold py-7 hover:text-teal-500">
+                show more
+              </button>
+            )
+          }
+        </> 
       ) : (
         <h1>No users available</h1>
       )}
-
-
       {/*  modal for delete user */}
       <Modal
         show={openModal}
@@ -97,7 +139,7 @@ function UsersAll() {
           <div className="text-center">
             <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this post?
+              Are you sure you want to delete this user?
             </h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={deleteUserHandle}>
