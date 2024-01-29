@@ -31,7 +31,7 @@ function UsersAll() {
             }
         }
         if(currentUser.isAdmin)  fetchUsers();
-    },[currentUser._id, currentUser.isAdmin]);
+    },[currentUser._id]);
 
     const showMoreHandler = async () => {
         const startIndex = users.length;
@@ -53,7 +53,7 @@ function UsersAll() {
     const deleteUserHandle = async () => {
         
         try {
-            const res = await fetch(`/api/user/deleteuser/${userIdToDelete}`, {
+            const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
                 method: 'DELETE',
             });
             const data = await res.json();
