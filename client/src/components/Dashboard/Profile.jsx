@@ -204,7 +204,7 @@ function Profile() {
               <img
                 alt="Bonnie image"
                 src={photoURL || currentUser.profilePicture}
-                className={`w-full h-full border-8 border-[lightgray] rounded-full  object-cover ${
+                className={`w-full decoration-sky-500 h-full border-8 p-2 border-[lightgray] rounded-full  object-cover ${
                   imageUploadProgress &&
                   imageUploadProgress < 100 &&
                   "filter blur-sm"

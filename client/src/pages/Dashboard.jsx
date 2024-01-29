@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom"
 import SideBar from "../components/Dashboard/SideBar";
 import Profile from "../components/Dashboard/Profile";
 import AdminDashboard from "../components/Dashboard/AdminDashboard";
+import UsersAll from "../components/Dashboard/UsersAll";
 
 function Dashboard() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function Dashboard() {
       <div className="w-full min-h-screen">
         {tab === "profile" && <Profile />}
         {tab === "posts" && <AdminDashboard />}
+        {tab === "users" && <UsersAll />}
       </div>
     </div>
   )

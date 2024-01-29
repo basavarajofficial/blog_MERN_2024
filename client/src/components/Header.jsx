@@ -59,12 +59,14 @@ function Header() {
           <Dropdown className="shadow-lg"
             arrowIcon={false}
             inline
+            
             label={
               <Avatar
                 img={currentUser.profilePicture}
                 alt="avatar"
                 rounded
                 bordered
+                className="bg-gray-100 rounded-full"
               />
             }
           >

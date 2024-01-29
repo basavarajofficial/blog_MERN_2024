@@ -141,7 +141,7 @@ function UpdatePost() {
                 className='border-2 border-gray-500 h-80 pb-11 rounded-xl drop-shadow-xl' required onChange={(value) => {setFormData({...formData, content: value})}}
             />
 
-            <Button type='submit'  >Update post</Button>
+            <Button type='submit' className='mb-14' >Update post</Button>
         </form>
 
         {publishError && (
