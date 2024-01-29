@@ -1,6 +1,7 @@
 
-import { Table } from "flowbite-react";
+import { Button, Modal, Table } from "flowbite-react";
 import { useEffect, useState } from "react"
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 
@@ -9,8 +10,9 @@ function AdminDashboard() {
   const { currentUser } = useSelector(state => state.user);
   const [blogPosts, setBlogPosts] = useState([]);
   const [ showMore, setShowMore] = useState(true);
-
-  console.log(blogPosts);
+    // * to delete post
+    const [openModal, setOpenModal] = useState(false);
+    const [postIdToDelete, setPostIdToDelete] = useState('');
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -45,6 +47,28 @@ function AdminDashboard() {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const deletePostHandle = async() => {
+    setOpenModal(false);
+   try {
+      const res = await fetch(`/api/post/deletepost/${postIdToDelete}/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = res.json();
+      if(!res.ok){
+        console.log(data.message);
+      }
+      if(res.ok){
+        setBlogPosts((prev) => 
+          prev.filter((post) => post._id !== postIdToDelete)
+        );
+        setPostIdToDelete("");
+      }
+
+   } catch (error) {
+    console.log(error);
+   }
   }
 
 
@@ -82,7 +106,10 @@ function AdminDashboard() {
                     <Link to={`/update-post/${post._id}`}>
                       <span className="text-violet-400 font-semibold">Edit</span>
                     </Link>
-                      <span className="text-red-600 font-semibold cursor-pointer">Delete</span>
+                      <span onClick={() => {
+                        setOpenModal(true)
+                        setPostIdToDelete(post._id)
+                        }} className="text-red-600 font-semibold cursor-pointer">Delete</span>
                   </Table.Cell>
 
                 </Table.Row>
@@ -102,6 +129,33 @@ function AdminDashboard() {
       ) : (
         <h1>No Posts created</h1>
       )}
+
+
+      {/*  modal for delete user */}
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete this post?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={deletePostHandle}>
+                {"Yes, I'm sure"}
+              </Button>
+              <Button color="gray" onClick={() => setOpenModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   )
 }
