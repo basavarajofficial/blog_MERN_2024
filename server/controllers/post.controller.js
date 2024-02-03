@@ -84,6 +84,7 @@ export const deletePost = async (req, res, next) => {
     }
 }
 
+
 export const updatePost = async (req, res, next) => {
     if(!req.user.isAdmin || req.user.id !== req.params.userId) {
         return next(errorHandler(403, 'You do not have permission to update this post.'));
@@ -92,7 +93,7 @@ export const updatePost = async (req, res, next) => {
         const updatedpost = await Post.findByIdAndUpdate(req.params.postId, {
             $set : {
                 title : req.body.title,
-                category : req.body.category,
+                catagory : req.body.catagory,
                 content : req.body.content,
                 image : req.body.image,
             },

@@ -1,7 +1,7 @@
 
 import { Button, Modal, Table } from "flowbite-react";
 import { useEffect, useState } from "react"
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiPencilAlt, HiTrash } from "react-icons/hi";
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 
@@ -103,14 +103,18 @@ function AdminDashboard() {
                     </Link>
                   </Table.Cell>
                   <Table.Cell>{post.catagory}</Table.Cell>
-                  <Table.Cell className="flex gap-2 mx-auto">
+                  <Table.Cell className="flex gap-2 mx-auto sm:text-lg md:text-xl">
                     <Link to={`/update-post/${post._id}`}>
-                      <span className="text-violet-400 font-semibold">Edit</span>
+                      <span className="text-violet-400 font-semibold">
+                        <HiPencilAlt />
+                      </span>
                     </Link>
                       <span onClick={() => {
                         setOpenModal(true)
                         setPostIdToDelete(post._id)
-                        }} className="text-red-600 font-semibold cursor-pointer">Delete</span>
+                        }} className="text-red-600 font-semibold cursor-pointer">
+                          <HiTrash />
+                        </span>
                   </Table.Cell>
 
                 </Table.Row>

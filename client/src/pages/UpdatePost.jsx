@@ -85,7 +85,6 @@ function UpdatePost() {
                 body : JSON.stringify(formData)
             });
             const data = await res.json();
-            console.log(data);
             if(!res.ok){
                 setPublishError(data.message);
             }
@@ -98,9 +97,10 @@ function UpdatePost() {
         }
     }
 
+    console.log(formData);
   return (
     <div className="min-h-screen p-3 mx-auto max-w-3xl relative">
-        <div  onClick={() => navigate('/dashboard?tab=profile')}
+        <div  onClick={() => navigate(window.history.back())}
         className='absolute left-0 text-3xl hover:scale-110 cursor-pointer'>
             <HiArrowCircleLeft /> 
         </div>

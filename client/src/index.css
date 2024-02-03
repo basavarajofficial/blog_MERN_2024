@@ -2,11 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
 body{
     height: 100vh;
 }
+/* .sticky {
+    position: sticky;
+    top: 0;
+    background-color: unset;
+    backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 1px 1px 5px;
+    z-index: 1000;
+    width: 100%;
+} */
 
 .ql-editor{
     font-size: 1.05rem;
+}
+
+.post-content p{
+    margin-bottom: .5rem ;
+    font-family: Ubuntu ;
+}
+
+.post-content h2{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.post-content h3{
+    font-size: 1.2rem;
+}
+.post-content h4{
+    font-size: 1.1rem;
+}
+
+.post-content a{
+    text-decoration: none;
+    color: rgb(76, 76, 249);
+    
+}
+.post-content a:hover{
+    text-decoration: underline;
+}
+.dark .post-content a{
+    color: aqua;
 }

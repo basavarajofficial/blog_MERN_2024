@@ -110,10 +110,11 @@ function CreatePosts() {
                 <img src={formData?.image} alt="image" className='w-full h-72 object-cover' />
             )}
             
-            
-            <ReactQuill theme="snow" placeholder='write something..' 
-                className='border-2 border-gray-500 h-80 pb-11 rounded-xl drop-shadow-xl' required onChange={(value) => {setFormData({...formData, content: value})}}
-            />
+            <div >
+                <ReactQuill theme="snow" placeholder='write something..' 
+                    className='rounded-xl drop-shadow-xl' required onChange={(value) => {setFormData({...formData, content: value})}}
+                />
+            </div>
 
             <Button type='submit'  >Publish</Button>
         </form>

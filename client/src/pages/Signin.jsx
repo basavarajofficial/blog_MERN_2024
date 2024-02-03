@@ -13,10 +13,6 @@ import { PageLogo } from "../components/Logo";
 function Signin() {
 
   const [formData, setFormData] = useState({});
-  // const [loading, setLoading] = useState(false);
-  // const [alertMessage, setAlertMessage] = useState(null);
-
-  
   const dispatch = useDispatch();
   const { loading, error : alertMessage} = useSelector(state => state.user);
 
@@ -41,11 +37,9 @@ function Signin() {
       });
 
       const data = await res.json();
-      console.log(data);
       if(data?.success === false){
         dispatch(signInFailure(data?.message))
       }
-      // setLoading(false);
 
       if(res.ok){
           dispatch(signInSuccess(data));
@@ -56,12 +50,7 @@ function Signin() {
       dispatch(signInFailure(error.message));
     }
   }
-
-  // setTimeout(() => {
-  //   if(alertMessage !== null)
-  //   setAlertMessage(null);
-  // },4000)
-
+  
   return (
     <div className="min-w-screen min-h-screen mt-20">
     <div className="flex  p-3 max-w-2xl mx-auto justify-center align-middle gap-12 flex-col sm:flex-row md:max-w-4xl">

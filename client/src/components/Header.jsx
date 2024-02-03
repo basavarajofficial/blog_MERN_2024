@@ -34,8 +34,16 @@ function Header() {
 
   }
 
+  // window.addEventListener("scroll", () => {
+  //   if(window.scrollY > 70){
+  //     document.getElementById("navBar").classList.add("sticky");
+  //   }else{
+  //     document.getElementById("navBar").classList.remove("sticky");
+  //   }
+  // })
+
   return (
-    <Navbar fluid rounded className="border-b-2 bg-transparent">
+    <Navbar id="navBar" fluid rounded className="border-b-2">
       <Logo />
 
       <form>
