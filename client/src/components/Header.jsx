@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signoutStart, signoutSuccess } from "../redux/user/userSlice";
+import { useEffect, useState } from "react";
 
 function Header() {
   const path = useLocation().pathname;
@@ -13,6 +14,23 @@ function Header() {
   const { currentUser, loading } = useSelector((state) => state.user);
   const { theme, } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 80) { // Change 100 to your desired scroll position
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
 
   const signoutHandler = async () => {
@@ -34,16 +52,10 @@ function Header() {
 
   }
 
-  // window.addEventListener("scroll", () => {
-  //   if(window.scrollY > 70){
-  //     document.getElementById("navBar").classList.add("sticky");
-  //   }else{
-  //     document.getElementById("navBar").classList.remove("sticky");
-  //   }
-  // })
+ 
 
   return (
-    <Navbar id="navBar" fluid rounded className="border-b-2">
+    <Navbar id="navBar" className={isSticky ? 'sticky' : ''} fluid rounded>
       <Logo />
 
       <form>

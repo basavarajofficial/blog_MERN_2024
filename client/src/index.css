@@ -2,37 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-
 body{
     height: 100vh;
+    font-family: 'Ubuntu', sans-serif;
 }
-/* .sticky {
+.sticky {
     position: sticky;
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
     background-color: unset;
     backdrop-filter: blur(10px);
     border: none;
-    box-shadow: 1px 1px 5px;
     z-index: 1000;
-    width: 100%;
-} */
+    transition: 1s ease-out;
+}
+.dark .editor{
+    background-color: rgb(158, 217, 249);
+    color: black;
+}
 
 .ql-editor{
     font-size: 1.05rem;
 }
-
+.post-content{
+    padding: 15px;
+}
 .post-content p{
+    font-size: 1.09rem;
     margin-bottom: .5rem ;
-    font-family: Ubuntu ;
+    font-family: 'Ubuntu', sans-serif;
+    line-height: 160%;
 }
 
 .post-content h2{
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
 }
 .post-content h3{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
 }
 .post-content h4{
     font-size: 1.1rem;
@@ -48,4 +60,9 @@ body{
 }
 .dark .post-content a{
     color: aqua;
+}
+
+.post-content li {
+    list-style-type: disc;
+    margin-left: 50px;
 }

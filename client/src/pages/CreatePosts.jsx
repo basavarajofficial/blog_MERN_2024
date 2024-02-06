@@ -111,8 +111,8 @@ function CreatePosts() {
             )}
             
             <div >
-                <ReactQuill theme="snow" placeholder='write something..' 
-                    className='rounded-xl drop-shadow-xl' required onChange={(value) => {setFormData({...formData, content: value})}}
+                <ReactQuill  placeholder='write something' className=' editor'
+                 required onChange={(value) => {setFormData({...formData, content: value})}}
                 />
             </div>
 

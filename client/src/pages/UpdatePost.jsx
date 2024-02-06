@@ -75,11 +75,12 @@ function UpdatePost() {
             setImageProgress(null);
         }
     }
+    console.log(formData);
 
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
+            const res = await fetch(`/api/post/updatepost/${formData?._id}/${currentUser._id}`, {
                 method : "PUT",
                 headers : { "Content-Type": "application/json"},
                 body : JSON.stringify(formData)
@@ -96,8 +97,6 @@ function UpdatePost() {
             setPublishError("Something went wrong");
         }
     }
-
-    console.log(formData);
   return (
     <div className="min-h-screen p-3 mx-auto max-w-3xl relative">
         <div  onClick={() => navigate(window.history.back())}
@@ -107,8 +106,8 @@ function UpdatePost() {
         <h1 className="text-center text-2xl sm:text-3xl font-bold my-7">Update Post</h1>
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
             <div className='flex flex-col gap-4 sm:flex-row justify-between'>
-            <TextInput value={formData.title} placeholder='Title' required className='caret-pink-600 flex-1' onChange={(e) => setFormData({...formData, title : e.target.value})}  />
-            <Select value={formData.catagory} onChange={(e) => setFormData({...formData, catagory : e.target.value})}>
+            <TextInput value={formData?.title} placeholder='Title' required className='caret-pink-600 flex-1' onChange={(e) => setFormData({...formData, title : e.target.value})}  />
+            <Select value={formData?.catagory} onChange={(e) => setFormData({...formData, catagory : e.target.value})}>
                 <option value="uncategorized" >Select a Catagory</option>
                 <option value="javascript" >Javascript</option>
                 <option value="html" >HTML</option>
@@ -132,13 +131,13 @@ function UpdatePost() {
 
             {imageUploadError && <Alert color='failure'>{imageUploadError}</Alert>}
 
-            {formData.image && (
+            {formData?.image && (
                 <img src={formData?.image} alt="image" className='w-full h-72 object-cover' />
             )}
             
             
-            <ReactQuill theme="snow" placeholder='write something..'  value={formData.content}
-                className='border-2 border-gray-500 h-80 pb-11 rounded-xl drop-shadow-xl' required onChange={(value) => {setFormData({...formData, content: value})}}
+            <ReactQuill theme="snow" placeholder='write something'  value={formData.content}
+               className='editor'  required onChange={(value) => {setFormData({...formData, content: value})}}
             />
 
             <Button type='submit' className='mb-14' >Update post</Button>
