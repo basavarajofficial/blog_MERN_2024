@@ -4,6 +4,8 @@ import { Button, Spinner } from 'flowbite-react';
 import { useSelector} from 'react-redux';
 import { HiPencil } from 'react-icons/hi';
 import Comments from '../components/Comments';
+import PostCard from '../components/PostCard';
+
 
 
 
@@ -13,6 +15,8 @@ function PostPage() {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(false);
     const [post, setPost] = useState(null);
+    const [recentPost, setRecentPost] = useState([]);
+
 
     const { currentUser } = useSelector(state => state.user);
 
@@ -41,6 +45,21 @@ function PostPage() {
     fetchPosts();
     }, [postSlug]);
 
+    useEffect(() => {
+        try {
+            const fetchRecentPosts = async () => {
+                const res = await fetch(`/api/post/getposts?limit=3`);
+                const data = await res.json();
+                if(res.ok){
+                    setRecentPost(data.posts);
+                }
+            }
+            fetchRecentPosts()
+        } catch (error) {
+            console.log(error);
+        }
+    },[]);
+
     
     if(loading) return (
         <div className='flex justify-center items-center min-h-screen'>
@@ -49,6 +68,7 @@ function PostPage() {
     )
 
   return (
+    <>
     <main className='min-h-screen max-w-5xl flex p-3 flex-col mx-auto'>
 
         { currentUser && currentUser?.isAdmin && (
@@ -78,7 +98,20 @@ function PostPage() {
         </div>
         <hr className='my-5' />
         <Comments postId={post?._id} />
-    </main>
+        <hr className='my-5' />
+
+        
+        </main>
+        <div className='flex flex-col justify-center items-center mb-5 p-4'>
+            <h1 className='text-2xl w-full text-center my-10 font-semibold'>Recent articles</h1>
+            <div className='flex flex-wrap gap-5 justify-center'>
+            {
+                recentPost && 
+                recentPost.map((post) => <PostCard key={post._id} post={post} /> )
+            }
+            </div>
+        </div>
+        </>
     
   )
 }

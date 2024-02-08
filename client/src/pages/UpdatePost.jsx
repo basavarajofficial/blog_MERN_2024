@@ -75,7 +75,6 @@ function UpdatePost() {
             setImageProgress(null);
         }
     }
-    console.log(formData);
 
     const submitHandler = async (e) => {
         e.preventDefault();

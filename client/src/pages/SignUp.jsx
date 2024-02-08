@@ -52,7 +52,7 @@ const SignUp = () => {
       </Link>
       <div className=" mt-4 sm:text-xl">
         <p>Wel come to the tech-blogs</p>
-        <p>You can signup eith your email and password or with google</p>
+        <p>You can signup with your email and password or with google</p>
       </div>
       </div>
 
