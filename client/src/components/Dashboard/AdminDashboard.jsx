@@ -33,6 +33,7 @@ function AdminDashboard() {
     if(currentUser.isAdmin) fetchPosts();
   }, [currentUser._id]);
 
+
   const showMoreHandler = async () => {
     const startIndex = blogPosts.length;
     try {
@@ -66,12 +67,10 @@ function AdminDashboard() {
         );
         setPostIdToDelete("");
       }
-
    } catch (error) {
     console.log(error);
    }
   }
-
 
   return (
     <div className="table-auto overflow-auto md:mx-auto p-3 scroll-smooth will-change-scroll">
@@ -103,16 +102,16 @@ function AdminDashboard() {
                     </Link>
                   </Table.Cell>
                   <Table.Cell>{post.catagory}</Table.Cell>
-                  <Table.Cell className="flex gap-2 mx-auto sm:text-lg md:text-xl">
+                  <Table.Cell className="flex gap-5 items-center mx-auto text-lg sm:text-xl md:text-2xl">
                     <Link to={`/update-post/${post._id}`}>
-                      <span className="text-violet-400 font-semibold">
+                      <span className="text-violet-400  hover:text-teal-500 font-semibold">
                         <HiPencilAlt />
                       </span>
                     </Link>
                       <span onClick={() => {
                         setOpenModal(true)
                         setPostIdToDelete(post._id)
-                        }} className="text-red-600 font-semibold cursor-pointer">
+                        }} className="text-red-400 hover:text-red-600 font-semibold cursor-pointer">
                           <HiTrash />
                         </span>
                   </Table.Cell>
