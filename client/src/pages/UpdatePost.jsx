@@ -19,6 +19,7 @@ function UpdatePost() {
     const { currentUser } = useSelector(state => state.user);
 
     const [ formData, setFormData] = useState({});
+    console.log(formData);
 
     const navigate = useNavigate();
 
@@ -27,21 +28,21 @@ function UpdatePost() {
             const fetchInfo = async () => {
                 const res = await fetch(`/api/post/getposts?postId=${postId}`);
                 const data = await res.json();
-                if(!res.ok){
+                
+                if(res.ok){
+                    setPublishError(null);
+                    setFormData(data?.posts[0]);
+                }else{
                     setPublishError(data.message)
                     console.log(data.message);
                     return;
-                }
-                if(res.ok){
-                    setPublishError(null);
-                    setFormData(data.posts[0]);
                 }
             }
             fetchInfo();
         } catch (error) {
             console.log(error);
         }
-    }, [postId]);
+    }, []);
 
     const uploadImageHandler = async() => {
         try {
@@ -131,7 +132,7 @@ function UpdatePost() {
             {imageUploadError && <Alert color='failure'>{imageUploadError}</Alert>}
 
             {formData?.image && (
-                <img src={formData?.image} alt="image" className='w-full h-72 object-cover' />
+                <img src={formData?.image} alt="image" className='w-full h-72 object-cover rounded-xl' />
             )}
             
             

@@ -5,7 +5,7 @@ import { HiOutlineExclamationCircle, HiPencilAlt, HiTrash } from "react-icons/hi
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 
-function AdminDashboard() {
+function AdminPosts() {
 
   const { currentUser } = useSelector(state => state.user);
   const [blogPosts, setBlogPosts] = useState([]);
@@ -164,4 +164,4 @@ function AdminDashboard() {
   )
 }
 
-export default AdminDashboard
+export default AdminPosts;

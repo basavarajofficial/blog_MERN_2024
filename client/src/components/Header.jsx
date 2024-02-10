@@ -72,7 +72,6 @@ function Header() {
       <div className="flex gap-2 md:order-2">
         <Button className="inline w-12 h-10" color="gray" pill onClick={() => dispatch(toggleTheme())}>
           {(theme === "dark") ? (<FaSun />) : (<FaMoon />) }
-          
         </Button>
 
         {currentUser ? (
@@ -101,8 +100,8 @@ function Header() {
               </span>
             </Dropdown.Header>
             )}
-           
-            <Link to={'/dashboard?tab=profile'}>
+          
+            <Link to={'/dashboard?tab=dashboard'}>
               <Dropdown.Item>Dashboard</Dropdown.Item>
             </Link>
             

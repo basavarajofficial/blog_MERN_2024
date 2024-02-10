@@ -1,6 +1,6 @@
 import {  Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiArrowSmRight, HiDocument, HiHome, HiOutlineDocument, HiOutlinePencilAlt, HiOutlineUsers, HiUser, HiUsers } from 'react-icons/hi';
+import { HiArrowSmRight,  HiChartPie,  HiChatAlt2, HiDocument, HiHome, HiOutlineChatAlt2, HiOutlineDocument, HiOutlinePencilAlt, HiOutlineUser, HiOutlineUsers, HiUser, HiUsers } from 'react-icons/hi';
 import { Link, useLocation } from "react-router-dom";
 import { signoutStart, signoutSuccess } from "../../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,8 +50,13 @@ function SideBar() {
           </Sidebar.Item>
           </Link>
 
+          <Link to={"/dashboard?tab=dashboard"}>
+          <Sidebar.Item href="#" active={tab === 'dashboard'} icon={HiChartPie}  labelColor="dark" as='div' >
+            Dashboard
+          </Sidebar.Item>
+          </Link>
           <Link to={"/dashboard?tab=profile"}>
-          <Sidebar.Item href="#" active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? "admin" : "user"} labelColor="dark" as='div' >
+          <Sidebar.Item href="#" active={tab === 'profile'} icon={tab === 'profile' ?  HiUser : HiOutlineUser} label={currentUser.isAdmin ? "admin" : "user"} labelColor="dark" as='div' >
             Profile
           </Sidebar.Item>
           </Link>
@@ -74,6 +79,14 @@ function SideBar() {
         )}
 
         {currentUser.isAdmin && (
+          <Link to={"/dashboard?tab=comments"}>
+          <Sidebar.Item href="#" active={tab === 'comments'} icon={tab !== 'comments' ? HiOutlineChatAlt2 : HiChatAlt2}  as='div' >
+            Comments
+          </Sidebar.Item>
+          </Link>
+        )}
+
+        {currentUser.isAdmin && (
           <Link to={"/dashboard?tab=users"}>
           <Sidebar.Item href="#" active={tab === 'users'} icon={tab !== 'users' ? HiOutlineUsers : HiUsers} label='admin'  labelColor="dark" as='div' >
             Users
@@ -81,7 +94,7 @@ function SideBar() {
           </Link>
         )}
 
-          <Sidebar.Item href="#" icon={HiArrowSmRight} onClick={signoutHandler}>
+          <Sidebar.Item href="#" icon={HiArrowSmRight} onClick={signoutHandler} className="hover:pl-6 transition-all duration-300">
             Sign out
           </Sidebar.Item>
         
@@ -91,4 +104,4 @@ function SideBar() {
   )
 }
 
-export default SideBar
+export default SideBar;

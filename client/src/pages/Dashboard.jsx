@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
 import SideBar from "../components/Dashboard/SideBar";
 import Profile from "../components/Dashboard/Profile";
-import AdminDashboard from "../components/Dashboard/AdminDashboard";
 import UsersAll from "../components/Dashboard/UsersAll";
+import AdminComments from "../components/Dashboard/AdminComments";
+import AdminPosts from "../components/Dashboard/AdminPosts";
+import DashboardBox from "../components/Dashboard/DashboardBox";
 
 function Dashboard() {
   const location = useLocation();
@@ -26,8 +28,10 @@ function Dashboard() {
 
       {/* profile */}
       <div className="w-full min-h-screen">
+        {tab === "dashboard" && <DashboardBox />}
         {tab === "profile" && <Profile />}
-        {tab === "posts" && <AdminDashboard />}
+        {tab === "posts" && <AdminPosts />}
+        {tab === "comments" && <AdminComments />}
         {tab === "users" && <UsersAll />}
       </div>
     </div>

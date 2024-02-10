@@ -79,16 +79,61 @@ export const deleteComment = async (req, res, next) => {
     try {
         const comment = await Comment.findById(req.params.commentId);
         if(!comment){
-            return next(errorHandler(403, "Comment not found"))
+            return next(errorHandler(403, "Comment not found"));
         }
-        const { userId, commentId } = req.params;
-        if( userId !== req.user.id && !req.user.isAdmin ){
+        const { commentId } = req.params;
+        if( comment.userId !== req.user.id && !req.user.isAdmin ){
             return next(errorHandler(403, "Not authorized to delete"));
         }
         
         await Comment.findByIdAndDelete(commentId);
         res.status(200).json("Comment deleted!");
         
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+//** get all comments to show in admin dashboard */
+
+
+export const getAllComments = async (req, res, next) => {
+    if(!req.user.isAdmin){
+        next(errorHandler(403, "You do not have admin access"));
+    }
+    try {
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const sortDirection = req.query.order === 'asc' ? 1 : -1;
+        const comments = await Comment.find()
+        .sort({createdAt: sortDirection})
+        .skip(startIndex)
+        .limit(limit);
+
+        const totalComments = await Comment.countDocuments();
+
+        const now = new Date();
+        const oneMonthAgo = new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        );
+
+        const lastMonthComments = await Comment.countDocuments({
+            createdAt : { $gt : oneMonthAgo },
+        })
+
+        // const usersWithoutPassword = users.map((user) => {
+        //     const { password , ...rest } = user._doc;
+        //     return rest;
+        // })
+
+        res.status(200).json({
+            comments,
+            totalComments,
+            lastMonthComments
+        });
     } catch (error) {
         next(error);
     }

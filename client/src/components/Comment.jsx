@@ -64,7 +64,7 @@ function Comment({comment,  likeCommentHandler, onEdit,  onDelete }) {
             return;
         }
         try {
-            const res = await fetch(`http://localhost:5173/api/comment/deleteComment/${comment._id}/${currentUser._id}`,{
+            const res = await fetch(`http://localhost:5173/api/comment/deleteComment/${comment._id}`,{
                 method: 'DELETE'
             });
             if(res.ok){
