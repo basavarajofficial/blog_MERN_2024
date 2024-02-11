@@ -50,11 +50,14 @@ function SideBar() {
           </Sidebar.Item>
           </Link>
 
+        {
+          currentUser?.isAdmin && 
           <Link to={"/dashboard?tab=dashboard"}>
-          <Sidebar.Item href="#" active={tab === 'dashboard'} icon={HiChartPie}  labelColor="dark" as='div' >
-            Dashboard
-          </Sidebar.Item>
+            <Sidebar.Item href="#" active={tab === 'dashboard'} icon={HiChartPie}  labelColor="dark" as='div' >
+              Dashboard
+            </Sidebar.Item>
           </Link>
+          }
           <Link to={"/dashboard?tab=profile"}>
           <Sidebar.Item href="#" active={tab === 'profile'} icon={tab === 'profile' ?  HiUser : HiOutlineUser} label={currentUser.isAdmin ? "admin" : "user"} labelColor="dark" as='div' >
             Profile

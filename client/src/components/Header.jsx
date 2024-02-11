@@ -101,7 +101,7 @@ function Header() {
             </Dropdown.Header>
             )}
           
-            <Link to={'/dashboard?tab=dashboard'}>
+            <Link to={ currentUser.isAdmin ? '/dashboard?tab=dashboard' : '/dashboard?tab=profile'}>
               <Dropdown.Item>Dashboard</Dropdown.Item>
             </Link>
             

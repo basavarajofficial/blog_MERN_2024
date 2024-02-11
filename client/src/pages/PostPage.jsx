@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Spinner } from 'flowbite-react';
 import { useSelector} from 'react-redux';
-import { HiPencil } from 'react-icons/hi';
+import { HiArrowSmRight, HiPencil } from 'react-icons/hi';
 import Comments from '../components/Comments';
 import PostCard from '../components/PostCard';
 
@@ -110,6 +110,9 @@ function PostPage() {
                 recentPost.map((post) => <PostCard key={post._id} post={post} /> )
             }
             </div>
+            <Link to={'/serach'} className="group flex justify-center py-2 px-4 dark:bg-gray-600 dark:text-teal-400 w-fit mt-10 mb-12 bg-[#3f75ff] rounded-full text-slate-100" >
+              <span className="flex justify-center items-center gap-1"> View all Posts <HiArrowSmRight className="group-hover:pl-3 w-fit transition-all duration-300" /></span>
+            </Link>
         </div>
         </>
     

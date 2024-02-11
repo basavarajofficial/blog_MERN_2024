@@ -15,8 +15,10 @@ function PostCard({post}) {
       <h5 className="line-clamp-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
         {post.title}
       </h5>
-      <p className="font-normal text-gray-700 dark:text-gray-400 pt-2">
-        #{post.catagory}
+      <p className="font-normal flex justify-between text-gray-700 p-2 dark:text-gray-400 pt-2">
+        <span> #{post?.catagory}</span>
+        <span> {new Date(post?.createdAt).toLocaleDateString()}</span>
+       
       </p>
       <Link to={`/post/${post.slug}`} 
       className="z-10 group-hover:bottom-0 absolute bottom-[-200px] left-0 right-0 py-2 bg-teal-700 hover:bg-teal-500 rounded-md !rounded-t-none text-center transition-all duration-300 text-slate-200  m-2" 
