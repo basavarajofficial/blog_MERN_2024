@@ -1,7 +1,7 @@
 
 import { Button, Modal, Table } from "flowbite-react";
 import { useEffect, useState } from "react"
-import { HiOutlineExclamationCircle, HiPencilAlt, HiTrash } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiPencilAlt, HiPlusCircle, HiTrash } from "react-icons/hi";
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 
@@ -74,8 +74,16 @@ function AdminPosts() {
 
   return (
     <div className="table-auto overflow-auto md:mx-auto p-3 scroll-smooth will-change-scroll">
+    
       {currentUser.isAdmin && blogPosts.length > 0 ? (
         <>
+         <Link to={'/create-post'} className="group/item flex justify-end mx-5 my-3">
+            <Button className=" h-9 w-9 sm:h-12 sm:w-12  rounded-full hover:w-32 sm:hover:w-40  ">
+                <span className="hidden group-hover/item:inline-block text-[12px] sm:text-[16px] group-hover/item:text-slate-200">create a post</span>
+                <HiPlusCircle className="text-lg sm:text-xl  " />
+            </Button>
+          </Link>
+
           <Table hoverable className="shadow-md">
             <Table.Head>
               <Table.HeadCell>Date</Table.HeadCell>
@@ -101,7 +109,7 @@ function AdminPosts() {
                       {post.title}
                     </Link>
                   </Table.Cell>
-                  <Table.Cell>{post.catagory}</Table.Cell>
+                  <Table.Cell>{post.category}</Table.Cell>
                   <Table.Cell className="flex gap-5 items-center mx-auto text-lg sm:text-xl md:text-2xl">
                     <Link to={`/update-post/${post._id}`}>
                       <span className="text-violet-400  hover:text-teal-500 font-semibold">

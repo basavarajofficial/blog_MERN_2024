@@ -82,14 +82,15 @@ function CreatePosts() {
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
             <div className='flex flex-col gap-4 sm:flex-row justify-between'>
             <TextInput placeholder='Title' required className='caret-pink-600 flex-1' onChange={(e) => setFormData({...formData, title : e.target.value})}  />
-            <Select onChange={(e) => setFormData({...formData, catagory : e.target.value})}>
+            <Select onChange={(e) => setFormData({...formData, category : e.target.value})}>
                 <option value="uncategorized" >Select a Catagory</option>
-                <option value="javascript" >Javascript</option>
+                <option value="web_development" >Web Development</option>
+                <option value="reactjs" >React Js</option>
+                <option value="javascript" >JavaScript</option>
+                <option value="nextjs" >Next Js</option>
+                <option value="mongodb" >MongoDB</option>
                 <option value="html" >HTML</option>
                 <option value="css" >CSS</option>
-                <option value="react" >React</option>
-                <option value="mongodb" >MongoDB</option>
-                <option value="nextjs" >Next Js</option>
             </Select>
             </div>
             <div className='flex gap-4 items-center justify-between border-2 rounded-xl p-4 drop-shadow-xl'>

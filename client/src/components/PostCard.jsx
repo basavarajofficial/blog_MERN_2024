@@ -16,7 +16,7 @@ function PostCard({post}) {
         {post.title}
       </h5>
       <p className="font-normal flex justify-between text-gray-700 p-2 dark:text-gray-400 pt-2">
-        <span> #{post?.catagory}</span>
+        <span> #{post?.category}</span>
         <span> {new Date(post?.createdAt).toLocaleDateString()}</span>
        
       </p>

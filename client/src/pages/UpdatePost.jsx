@@ -14,6 +14,7 @@ function UpdatePost() {
     const [imageProgress, setImageProgress] = useState(null);
     const [imageUploadError, setImageUploadError] = useState(null);
     const [publishError, setPublishError] = useState(null);
+
     const { postId } = useParams();
 
     const { currentUser } = useSelector(state => state.user);
@@ -80,7 +81,7 @@ function UpdatePost() {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`/api/post/updatepost/${formData?._id}/${currentUser._id}`, {
+            const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
                 method : "PUT",
                 headers : { "Content-Type": "application/json"},
                 body : JSON.stringify(formData)
@@ -107,14 +108,15 @@ function UpdatePost() {
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
             <div className='flex flex-col gap-4 sm:flex-row justify-between'>
             <TextInput value={formData?.title} placeholder='Title' required className='caret-pink-600 flex-1' onChange={(e) => setFormData({...formData, title : e.target.value})}  />
-            <Select value={formData?.catagory} onChange={(e) => setFormData({...formData, catagory : e.target.value})}>
-                <option value="uncategorized" >Select a Catagory</option>
-                <option value="javascript" >Javascript</option>
+            <Select value={formData?.catagory} onChange={(e) => setFormData({...formData, category : e.target.value})}>
+            <option value="uncategorized" >Select a Catagory</option>
+                <option value="web_development" >Web Development</option>
+                <option value="reactjs" >React Js</option>
+                <option value="javascript" >JavaScript</option>
+                <option value="nextjs" >Next Js</option>
+                <option value="mongodb" >MongoDB</option>
                 <option value="html" >HTML</option>
                 <option value="css" >CSS</option>
-                <option value="react" >React</option>
-                <option value="mongodb" >MongoDB</option>
-                <option value="nextjs" >Next Js</option>
             </Select>
             </div>
             <div className='flex gap-4 items-center justify-between border-2 rounded-xl p-4 drop-shadow-xl'>
@@ -131,12 +133,14 @@ function UpdatePost() {
 
             {imageUploadError && <Alert color='failure'>{imageUploadError}</Alert>}
 
-            {formData?.image && (
-                <img src={formData?.image} alt="image" className='w-full h-72 object-cover rounded-xl' />
-            )}
+            <div>
+                {formData?.image && (
+                    <img src={formData?.image} alt="image" className='w-full h-72 object-cover rounded-xl' />
+                )}
+            </div>
             
             
-            <ReactQuill theme="snow" placeholder='write something'  value={formData.content}
+            <ReactQuill theme="snow" placeholder='write something'  value={formData?.content}
                className='editor'  required onChange={(value) => {setFormData({...formData, content: value})}}
             />
 

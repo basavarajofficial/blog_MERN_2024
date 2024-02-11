@@ -35,7 +35,7 @@ function PostPage() {
                 setErrors(true);
                 setLoading(false);
             }else{
-                setPost(data.posts[0]);
+                setPost(data?.posts[0]);
                 setErrors(false);
                 setLoading(false);
             }
@@ -74,7 +74,7 @@ function PostPage() {
     <main className='min-h-screen max-w-5xl flex p-3 flex-col mx-auto'>
 
         { currentUser && currentUser?.isAdmin && (
-            <Link to={post && `/update-post/${post._id}`}>
+            <Link to={`/update-post/${post?._id}`}>
                 <Button className='rounded-full md:w-10 md:h-10 w-7 h-7 absolute top-15 right-5 ' ><HiPencil className=' md:text-xl' /></Button>
             </Link>
         )}
@@ -86,7 +86,7 @@ function PostPage() {
             <p className='font-bold'>- {new Date(post?.createdAt).toLocaleDateString()}</p> 
             <div className='flex align-middle justify-between'>
                 <Link to={`/search?catagory=${post?.catagory}`}  >
-                    <Button pill size='xs' color='success' className='self-center mt-4' >#{post?.catagory}</Button>
+                    <Button pill size='xs' color='success' className='self-center mt-4' >#{post?.category}</Button>
                 </Link>
                 <span  className='w-15 h-8 p-2 rounded-2xl text-center text-xs bg-[#96f9e8] text-slate-700 font-semibold'>{(post?.content.length / 1000).toFixed(0)} min read</span>
             </div>

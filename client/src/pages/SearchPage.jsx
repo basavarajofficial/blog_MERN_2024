@@ -1,4 +1,4 @@
-import { Select, TextInput } from 'flowbite-react'
+import { Select, Spinner, TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from '../components/PostCard';
@@ -132,9 +132,8 @@ function SearchPage() {
                     value={sidebarData.category} 
                     id='category'
                     >
-                        <option value="" >unselect</option>
-                        <option value="uncategorized" >Uncategorized</option>
-                        <option value="web-development" >Web Development</option>
+                        <option value="uncategorized" >select</option>
+                        <option value="web_development" >Web Development</option>
                         <option value="reactjs" >React Js</option>
                         <option value="javascript" >JavaScript</option>
                         <option value="nextjs" >Next Js</option>
@@ -153,7 +152,10 @@ function SearchPage() {
                 {!loading && posts.length === 0 && <h1 className=' flex text-center justify-center mt-8 text-xl bg-gray-400 text-slate-200 p-10 rounded-lg dark:text-slate-700'>No Posts Found</h1>}
             </div>
             <div>
-                {loading && <h1 className=' flex text-center justify-center mt-8 text-xl bg-gray-400 text-slate-200 p-10 rounded-lg dark:text-slate-700'>Loading...</h1>}
+                {loading && 
+                <h1 className=' flex text-center justify-center mt-8 text-xl bg-gray-400 text-slate-200 p-10 rounded-lg dark:text-slate-700'> 
+                    <Spinner  />
+                 </h1> }
             </div>
             <div className='flex flex-wrap w-full mx-auto justify-center gap-6 gap-y-10 my-16 p-8 sm:p-3'>
                 {posts?.map((post) => <PostCard key={post._id} post={post} /> )}

@@ -134,6 +134,33 @@ function DashboardBox() {
        
       </div>
 
+
+      <div className='dark:bg-teal-300 bg-gray-200 text-gray-800  rounded-lg p-4 h-fit w-full sm:max-w-[700px] shadow-lg'>
+      <div className='flex justify-between items-center w-full'>
+          <p className='text-lg font-semibold'>Recent posts</p>
+        <Link to={'/dashboard?tab=posts'}>
+          <Button className='mx-auto my-5'>See all</Button>
+        </Link>
+        </div>
+        {
+          posts && posts.length > 0 && 
+          posts.map((post) => 
+            <div key={post._id} className='flex my-4 '>
+              <Link to={`/post/${post.slug}`}>
+                <div className='flex gap-2'>
+                  <img src={post?.image} alt="profile" className='max-w-28 max-h-16 min-w-24 min-h-12 rounded-md object-cover' />
+                <div>
+                  <p className='text-lg line-clamp-2'> {post?.title}</p>
+                  <p className='font-serif'> #{post?.category}</p>
+                </div>
+                </div>
+              </Link>
+            </div>
+          )
+        }
+        
+      </div>
+
       
       <div className='dark:bg-teal-300 bg-gray-200 text-gray-800  rounded-lg p-4 h-fit w-full sm:max-w-[700px] shadow-lg'>
       <div className='flex justify-between items-center w-full'>
@@ -162,31 +189,7 @@ function DashboardBox() {
         
       </div>
 
-      <div className='dark:bg-teal-300 bg-gray-200 text-gray-800  rounded-lg p-4 h-fit w-full sm:max-w-[700px] shadow-lg'>
-      <div className='flex justify-between items-center w-full'>
-          <p className='text-lg font-semibold'>Recent posts</p>
-        <Link to={'/dashboard?tab=posts'}>
-          <Button className='mx-auto my-5'>See all</Button>
-        </Link>
-        </div>
-        {
-          posts && posts.length > 0 && 
-          posts.map((post) => 
-            <div key={post._id} className='flex my-4 '>
-              <Link to={`/post/${post.slug}`}>
-                <div className='flex gap-2'>
-                  <img src={post?.image} alt="profile" className='max-w-28 max-h-16 min-w-24 min-h-12 rounded-md object-cover' />
-                <div>
-                  <p className='text-lg line-clamp-2'> {post?.title}</p>
-                  <p className='font-serif'> #{post?.catagory}</p>
-                </div>
-                </div>
-              </Link>
-            </div>
-          )
-        }
-        
-      </div>
+     
 
 
      

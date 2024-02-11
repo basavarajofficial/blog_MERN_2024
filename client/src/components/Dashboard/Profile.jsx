@@ -1,8 +1,7 @@
 import { Alert, Button, Card, Modal, Spinner, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
-import { HiOutlineExclamationCircle, HiPencil, HiPlusCircle } from "react-icons/hi";
+import { HiOutlineExclamationCircle, HiPencil } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -151,15 +150,6 @@ function Profile() {
   return (
     <div className="w-full md:w-3xl  p-3 relative">
       <Card className=" sm:min-w-4xl mx-auto max-w-xl h-full mt-10 bg-gray-200">
-        {
-          currentUser?.isAdmin && 
-          <Link to={'/create-post'} className="group/item">
-            <Button className="absolute h-9 w-9 sm:h-12 sm:w-12 top-2 right-4 rounded-full hover:w-32 sm:hover:w-40  ">
-                <span className="hidden group-hover/item:inline-block text-[12px] sm:text-[16px] group-hover/item:text-slate-200">create a post</span>
-                <HiPlusCircle className="text-lg sm:text-xl  " />
-            </Button>
-          </Link>
-        }
 
         <form className="sm:min-w-4xl mx-auto max-w-lg">
           <div className="flex flex-col items-center py-6">
