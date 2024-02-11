@@ -15,6 +15,7 @@ import UpdatePost from './pages/UpdatePost';
 import PostPage from './pages/PostPage';
 import ScrollToTop from './components/ScrollToTop';
 import OnlineStatus from './components/OnlineStatus';
+import SearchPage from './pages/SearchPage';
 function App() {
 
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signin' element={<Signin />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/search' element={<SearchPage />} />
         <Route path='/about' element={<About />} />
         <Route path='/demo' element={<Demo />} />
         <Route element={<PrivateRoute />} >

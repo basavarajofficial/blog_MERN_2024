@@ -33,7 +33,7 @@ export const getPosts = async (req, res, next) => {
         const sortDirection = req.query.order === 'asc' ? 1 : -1;
         const posts = await Post.find({
             ...(req.query.userId && { userId: req.query.userId}),
-            ...(req.query.catagory && { catagory: req.query.catagory}),
+            ...(req.query.category && { catagory: req.query.category}),
             ...(req.query.slug && { slug: req.query.slug}),
             ...(req.query.postId && { _id: req.query.postId}),
             ...(req.query.searchTerm && { 
@@ -94,7 +94,7 @@ export const updatePost = async (req, res, next) => {
         const updatedpost = await Post.findByIdAndUpdate(req.params.postId, {
             $set : {
                 title : req.body.title,
-                catagory : req.body.catagory,
+                category : req.body.category,
                 content : req.body.content,
                 image : req.body.image,
             },

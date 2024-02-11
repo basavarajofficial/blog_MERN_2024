@@ -12,9 +12,6 @@ function Logo() {
           TECH
         </span> */}
         <img src={logo} alt="logo" className="h-10 w-10 rounded-full"  />
-        <span>
-          Blogs
-        </span>
       </Link>
     </div>
   )

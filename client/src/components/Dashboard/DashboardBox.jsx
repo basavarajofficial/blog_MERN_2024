@@ -164,7 +164,7 @@ function DashboardBox() {
 
       <div className='dark:bg-teal-300 bg-gray-200 text-gray-800  rounded-lg p-4 h-fit w-full sm:max-w-[700px] shadow-lg'>
       <div className='flex justify-between items-center w-full'>
-          <p className='text-lg font-semibold'>Recent users</p>
+          <p className='text-lg font-semibold'>Recent posts</p>
         <Link to={'/dashboard?tab=posts'}>
           <Button className='mx-auto my-5'>See all</Button>
         </Link>

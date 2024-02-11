@@ -1,5 +1,5 @@
 import { Avatar, Button, Dropdown, Navbar, Spinner, TextInput } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import Logo from "./Logo";
@@ -9,13 +9,27 @@ import { signoutStart, signoutSuccess } from "../redux/user/userSlice";
 import { useEffect, useState } from "react";
 
 function Header() {
-  const path = useLocation().pathname;
-
-  const { currentUser, loading } = useSelector((state) => state.user);
-  const { theme, } = useSelector((state) => state.theme);
-  const dispatch = useDispatch();
-
   const [isSticky, setIsSticky] = useState(false);
+  
+    const { currentUser, loading } = useSelector((state) => state.user);
+    const { theme, } = useSelector((state) => state.theme);
+    const path = useLocation().pathname;
+    const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+      const urlParams = new URLSearchParams(location.search);
+      const searchTermFromURL = urlParams.get("searchTerm");
+      if(searchTermFromURL){
+        setSearchTerm(searchTermFromURL);
+      }
+    }, [location.search]);
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,18 +66,29 @@ function Header() {
 
   }
 
+  const searchHandleSubmit = async(e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+    
+  }
+
  
 
   return (
     <Navbar id="navBar" className={isSticky ? 'sticky' : ''} fluid rounded>
       <Logo />
 
-      <form>
+      <form onSubmit={searchHandleSubmit}>
         <TextInput
           type="text"
           className="hidden sm:inline"
           placeholder="search"
           rightIcon={AiOutlineSearch}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
       <Button className="sm:hidden w-12 h-9" color="gray" pill>
@@ -118,15 +143,15 @@ function Header() {
 
         <Navbar.Toggle />
       </div>
-      <Navbar.Collapse>
+      <Navbar.Collapse >
         <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to={"/"}>Home</Link>
+          <Link to={"/"} className="sm:text-lg text-sm uppercase">Home</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to={"/about"}>About</Link>
+          <Link to={"/about"}   className="sm:text-lg text-sm uppercase">About</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to={"/projects"}>Projects</Link>
+          <Link to={"/projects"}  className="sm:text-lg text-sm uppercase">Projects</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
