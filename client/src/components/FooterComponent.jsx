@@ -21,14 +21,12 @@ function FooterComponent() {
                 <FooterLinkGroup>
                   <Footer.Link
                     href="/about"
-                    target="_blank"
                     rel="noreferrer noopener"
                   >
                     About
                   </Footer.Link>
                   <Footer.Link
                     href="/projects"
-                    target="_blank"
                     rel="noreferrer noopener"
                   >
                     Projects
