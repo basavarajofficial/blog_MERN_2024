@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Button, Spinner } from 'flowbite-react';
 import { useSelector} from 'react-redux';
-import { HiArrowSmRight, HiPencil } from 'react-icons/hi';
+import { HiArrowLeft, HiArrowSmRight, HiPencil } from 'react-icons/hi';
 import Comments from '../components/Comments';
 import PostCard from '../components/PostCard';
 
@@ -79,7 +79,7 @@ function PostPage() {
             </Link>
         )}
 
-        <button onClick={() => navigate('/')}>Back</button>
+        <button onClick={() => navigate("/")} className='dark:bg-gray-400 w-fit bg-blue-500 py-2 px-4 rounded-full hover:scale-110 text-slate-100 dark:text-slate-900 font-semibold mt-4'><HiArrowLeft /> </button>
 
         <div className='head-section px-2'>
             <h1 className='md:text-5xl sm:text-4xl text-3xl font-semibold flex items-start py-6'>{post?.title}</h1>

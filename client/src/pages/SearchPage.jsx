@@ -155,7 +155,7 @@ function SearchPage() {
             <div>
                 {loading && <h1 className=' flex text-center justify-center mt-8 text-xl bg-gray-400 text-slate-200 p-10 rounded-lg dark:text-slate-700'>Loading...</h1>}
             </div>
-            <div className='flex flex-wrap w-full mx-auto justify-center gap-6 my-16 '>
+            <div className='flex flex-wrap w-full mx-auto justify-center gap-6 gap-y-10 my-16 p-8 sm:p-3'>
                 {posts?.map((post) => <PostCard key={post._id} post={post} /> )}
                 {showMore && (
                       <button className="group flex justify-center py-2 px-4 dark:bg-gray-600 dark:text-teal-400 w-fit mt-10 mb-12 bg-[#3f75ff] rounded-full text-slate-100"
