@@ -27,7 +27,7 @@ const Home = () => {
   return (
     
     <div className="max-w-7xl flex flex-col justify-center items-center mx-auto">
-      <div className="bg-[#3f75ff] dark:bg-gray-600 text-slate-200 m-4 flex flex-col justify-center md:gap-10 rounded-lg lg:p-28 p-4 sm:p-10 shadow-lg mb-10 mt-20 md:h-[75vh]">
+      <div className="bg-[#233c7c] dark:bg-gray-600 text-slate-200 m-4 flex flex-col justify-center md:gap-10 rounded-lg lg:p-28 p-4 sm:p-10 shadow-lg mb-10 mt-20 md:h-[75vh]">
         <h1 className="text-3xl lg:text-6xl font-semibold uppercase">Welcome to my blog</h1>
         <p className="text-gray-200 text-xs sm:text-lg py-4">Here you will find a veriety of articles and contents such as web development, software engineering and programming languages</p>
         <Link to={'/search'} className="group flex justify-center py-4 dark:text-teal-400 w-fit text-lg" >

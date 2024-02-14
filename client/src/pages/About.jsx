@@ -1,6 +1,6 @@
 function About() {
   return (
-    <div className="max-w-7xl mx-auto h-screen mb-20">
+    <div className="max-w-7xl mx-auto min-h-screen mb-20">
       <div className="m-4 rounded-lg lg:p-28 p-4 sm:p-10 shadow-lg mb-10 mt-20">
         <h1 className="text-3xl lg:text-6xl font-semibold uppercase">
           About tech blog

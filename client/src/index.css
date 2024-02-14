@@ -6,18 +6,24 @@ body{
     height: 100vh;
     font-family: 'Ubuntu', sans-serif;
 }
-.sticky {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80%;
-    background-color: unset;
-    backdrop-filter: blur(10px);
-    border: none;
-    z-index: 1000;
-    transition: 1s ease-out;
+
+
+@media only screen and (min-width: 768px){
+    .sticky {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        background-color: unset;
+        backdrop-filter: blur(10px);
+        border: none;
+        z-index: 1000;
+        transition: 1s ease-out;
+    }
+
 }
+
 .dark .editor{
     background-color: rgb(158, 217, 249);
     color: black;

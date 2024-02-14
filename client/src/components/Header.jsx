@@ -147,13 +147,13 @@ function Header() {
       </div>
       <Navbar.Collapse >
         <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to={"/"} className="sm:text-lg text-sm uppercase">Home</Link>
+          <Link to={"/"} className="text-sm font-semibold uppercase">Home</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to={"/about"}   className="sm:text-lg text-sm uppercase">About</Link>
+          <Link to={"/about"}   className="text-sm font-semibold uppercase">About</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to={"/projects"}  className="sm:text-lg text-sm uppercase">Projects</Link>
+          <Link to={"/projects"}  className="text-sm font-semibold uppercase">Projects</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
