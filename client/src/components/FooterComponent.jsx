@@ -11,7 +11,7 @@ function FooterComponent() {
             <Logo className="my-12" />
 
             <Footer.Copyright
-              by="Tech Blogs - Basavaraj mannangi bmannangi34@gmail.com"
+              by="Tech Blogs - Basavaraj mannangi - bmannangi34@gmail.com"
               year={new Date().getFullYear()}
             />
 
