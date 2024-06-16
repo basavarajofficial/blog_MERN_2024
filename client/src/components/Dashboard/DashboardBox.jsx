@@ -110,6 +110,8 @@ function DashboardBox() {
 
       <div  className='flex flex-wrap gap-4 my-12 justify-center w-full'>
 
+      {
+          users && users.length > 0 && 
       <div className='dark:bg-teal-300 bg-gray-200 text-gray-800 inline  rounded-lg p-4 w-full sm:max-w-96 h-fit shadow-lg'>
         <div className='flex justify-between items-center w-full'>
           <p className='text-lg font-semibold'>Recent users</p>
@@ -131,10 +133,10 @@ function DashboardBox() {
             </div>
           )
         }
-       
       </div>
+    }
 
-
+      {posts && posts.length> 0 && 
       <div className='dark:bg-teal-300 bg-gray-200 text-gray-800  rounded-lg p-4 h-fit w-full sm:max-w-[700px] shadow-lg'>
       <div className='flex justify-between items-center w-full'>
           <p className='text-lg font-semibold'>Recent posts</p>
@@ -158,10 +160,10 @@ function DashboardBox() {
             </div>
           )
         }
-        
       </div>
+      }
 
-      
+      { comments && comments.length > 0 && 
       <div className='dark:bg-teal-300 bg-gray-200 text-gray-800  rounded-lg p-4 h-fit w-full sm:max-w-[700px] shadow-lg'>
       <div className='flex justify-between items-center w-full'>
           <p className='text-lg font-semibold'>Recent Comments</p>
@@ -177,7 +179,6 @@ function DashboardBox() {
           comments && comments.length > 0 && 
           comments.map((comment) => 
             <div key={comment._id} className='flex my-4  '>
-              
                 <div className='flex gap-2 justify-between w-full px-4'>
                   <p className='line-clamp-2'>{comment.content}</p>
                   <p className='text-lg mr-7'> {comment?.likesCount}</p>
@@ -186,14 +187,8 @@ function DashboardBox() {
             </div>
           )
         }
-        
       </div>
-
-     
-
-
-     
-
+      } 
       </div>
     </div>
   )
