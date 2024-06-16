@@ -67,13 +67,13 @@ function DashboardBox() {
     if(!currentUser.isAdmin) return;
 
   return (
-    
+  
     <div className='p-3 flex flex-col items-center justify-center'>
 
-      <div className='flex gap-5 flex-wrap justify-center items-center p-4  mt-10'>
+      <div className='flex gap-2 flex-wrap justify-center items-center p-1  mt-10'>
 
       <Link to={'/dashboard?tab=users'}>
-      <div className='w-96 sm:max-w-96  shadow-lg dark:bg-teal-300 dark:text-slate-800 flex border justify-between p-6 text-lg rounded-md'>
+      <div className='w-80 sm:max-w-96  shadow-lg dark:bg-teal-300 dark:text-slate-800 flex border justify-between p-6 text-lg rounded-md'>
         <div className='flex flex-col gap-2'>
           <h3>TOTAL USERS</h3>
           <p className='text-2xl px-4'>{totalUsers}</p>
@@ -84,7 +84,7 @@ function DashboardBox() {
       </Link>
 
       <Link to={'/dashboard?tab=posts'}>
-      <div className='w-96 sm:max-w-96  shadow-lg dark:bg-teal-300 dark:text-slate-800 flex border justify-between p-6 text-lg rounded-md'>
+      <div className='w-80 sm:max-w-96  shadow-lg dark:bg-teal-300 dark:text-slate-800 flex border justify-between p-6 text-lg rounded-md'>
         <div className='flex flex-col gap-2'>
           <h3>TOTAL POSTS</h3>
           <p className='text-2xl px-4'>{totalPosts}</p>
@@ -95,7 +95,7 @@ function DashboardBox() {
       </Link>
 
       <Link to={'/dashboard?tab=comments'}>
-      <div className='w-96 sm:max-w-96  shadow-lg dark:bg-teal-300 dark:text-slate-800 flex border justify-between p-6 text-lg rounded-md'>
+      <div className='w-80 sm:max-w-96  shadow-lg dark:bg-teal-300 dark:text-slate-800 flex border justify-between p-6 text-lg rounded-md'>
         <div className='flex flex-col gap-2'>
           <h3>TOTAL COMMENTS</h3>
           <p className='text-2xl px-4'>{totalComments}</p>
